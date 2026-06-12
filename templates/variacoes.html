@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cadastro de Variações</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+SEU CSS (NÃO ALTERADO)
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins', sans-serif;
+    background:#f3f0ed;
+}
+
+.container{
+    display:flex;
+    min-height:100vh;
+}
+
+.sidebar{
+    width:320px;
+    background:linear-gradient(to bottom,#2a0904,#4b1305);
+    padding:35px 22px;
+}
+
+.logo h1{
+    color:#fff;
+    font-size:48px;
+    font-weight:700;
+}
+
+.logo span{
+    color:#ff9800;
+    letter-spacing:4px;
+    font-size:18px;
+}
+
+.menu {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+}
+
+.container .menu-link{
+    display:block;
+    text-decoration:none;
+    color:white;
+    padding:18px;
+    border-radius:18px;
+    background:#ffffff10;
+}
+
+.container .menu-link:hover,
+.container .menu-link.active{
+    background:linear-gradient(90deg,#fca204,#ea5104,#ba0b04);
+    transform:translateX(5px);
+}
+
+.container .logout-btn{
+    display:block;
+    text-decoration:none;
+    text-align:center;
+    margin-top:20px;
+    padding:18px;
+    border-radius:18px;
+    color:white;
+    background:#ffffff10;
+}
+
+.container .content{
+    flex:1;
+    padding:40px;
+}
+
+.topo h1{
+    font-size:48px;
+    color:#222;
+}
+
+.topo p{
+    color:#777;
+    margin-top:5px;
+    font-size:18px;
+}
+
+.card-form{
+    background:white;
+    margin-top:30px;
+    padding:35px;
+    border-radius:25px;
+    box-shadow:0 10px 20px rgba(0,0,0,.05);
+}
+
+.input-group{
+    display:flex;
+    flex-direction:column;
+    margin-bottom:20px;
+}
+
+.input-group label{
+    font-size:16px;
+    font-weight:600;
+    margin-bottom:8px;
+}
+
+.input-group input,
+.input-group select{
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:14px;
+    background:#f4f4f4;
+    font-size:15px;
+}
+
+.dupla{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.btn-cadastrar{
+    background:linear-gradient(90deg,#fca204,#ea5104);
+    color:white;
+    border:none;
+    padding:18px;
+    border-radius:16px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.btn-cadastrar:hover{
+    opacity:.9;
+}
+
+@media(max-width:900px){
+    .container{flex-direction:column;}
+    .container .sidebar{width:100%;}
+    .dupla{grid-template-columns:1fr;}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h1>Fogaréu</h1>
+            <span>CLOTHES</span>
+        </div>
+
+        <div class="menu">
+
+            <a href="{{ url_for('dashboard') }}" class="menu-link">📊 Dashboard</a>
+            <a href="{{ url_for('produtos') }}" class="menu-link">👕 Produtos</a>
+            <a href="{{ url_for('variacoes') }}" class="menu-link active">🎨 Variações</a>
+            <a href="{{ url_for('pedidos') }}" class="menu-link">🛒 Pedidos</a>
+            <a href="{{ url_for('cliente') }}" class="menu-link">👤 Clientes</a>
+            <a href="{{ url_for('logout') }}" class="logout-btn">🚪 Sair</a>
+
+        </div>
+
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+        <div class="topo">
+            <h1>Cadastro de Variações</h1>
+            <p>Cadastre tamanhos, cores e estoque dos produtos.</p>
+        </div>
+
+        <section class="card-form">
+
+            <!-- ✔️ FORM CORRIGIDO -->
+            <form method="POST" action="{{ url_for('cadastrar_variacao') }}">
+
+                <div class="input-group">
+                    <label>ID do Produto</label>
+                    <input type="number" name="id_produto" required>
+                </div>
+
+                <div class="dupla">
+
+                    <div class="input-group">
+                        <label>Tamanho</label>
+                        <select name="tamanho" required>
+                            <option value="">Selecione</option>
+                            <option value="PP">PP</option>
+                            <option value="P">P</option>
+                            <option value="M">M</option>
+                            <option value="G">G</option>
+                            <option value="GG">GG</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Cor</label>
+                        <input type="text" name="cor" required>
+                    </div>
+
+                </div>
+
+                <div class="input-group">
+                    <label>Estoque Atual</label>
+                    <input type="number" name="estoque" min="0" required>
+                </div>
+
+                <button type="submit" class="btn-cadastrar">
+                    + Cadastrar Variação
+                </button>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

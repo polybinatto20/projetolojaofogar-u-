@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - Fogaréu Clothes</title>
+
+
+
+    <link rel="stylesheet" href="/static/style.css">
+
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <meta http-equiv="refresh" content="10">
+
+
+
+</head>
+
+
+
+<body>
+
+
+
+    <div class="dashboard">
+
+
+
+        <!-- SIDEBAR -->
+
+
+
+        <aside class="sidebar">
+
+
+
+            <div>
+
+
+
+                <div class="logo">
+
+                    <h1>Fogaréu</h1>
+
+                    <span>CLOTHES</span>
+
+                </div>
+
+
+
+                <div class="menu">
+
+
+
+                    <a href="{{ url_for('dashboard') }}" class="menu-link active">
+
+                        📊 Dashboard
+
+                    </a>
+
+
+
+                    <a href="{{ url_for('produtos') }}" class="menu-link">
+
+                        👕 Produtos
+
+                    </a>
+
+
+
+                    <a href="{{ url_for('variacoes') }}" class="menu-link">
+
+                        🎨 Variações
+
+                    </a>
+
+
+
+                    <a href="{{ url_for('pedidos') }}" class="menu-link">
+
+                        🛒 Pedidos
+
+                    </a>
+
+
+
+                    <a href="{{ url_for('cliente') }}" class="menu-link">
+
+                        👤 Clientes
+
+                    </a>
+
+
+
+                    <a href="{{ url_for('logout') }}" class="logout-btn">
+
+                        🚪 Sair
+
+                    </a>
+
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+        </aside>
+
+
+
+        <!-- MAIN -->
+
+
+
+        <main class="main">
+
+
+
+
+
+            <div class="topbar">
+
+
+
+                <div>
+
+                    <h2>Painel Administrativo</h2>
+
+                    <p>Gerencie produtos, pedidos e usuários da loja.</p>
+
+                </div>
+
+
+
+                <div class="admin">
+
+
+
+                    <div class="avatar">
+
+                        FC
+
+                    </div>
+
+
+
+                    <div>
+
+                        <strong>{{ session['admin'] }}</strong>
+
+                        <p>Fogaréu Clothes</p>
+
+                    </div>
+
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+            <!-- CARDS -->
+
+
+
+            <div class="cards">
+
+
+
+                <div class="card">
+
+                    <h3>Total de produtos</h3>
+
+                    <h1>{{ produtos }}</h1>
+
+                </div>
+
+
+
+                <div class="card">
+
+                    <h3>Total de pedidos</h3>
+
+                    <h1>{{ pedidos }}</h1>
+
+                </div>
+
+
+
+                <div class="card">
+
+                    <h3>Clientes cadastrados</h3>
+
+                    <h1>{{ cliente }}</h1>
+
+                </div>
+
+
+
+                <div class="card">
+
+                    <h3>Variações ativas</h3>
+
+                    <h1>{{ variacoes }}</h1>
+
+                </div>
+
+
+
+            </div>
+
+
+
+            <div class="grafico-card">
+
+
+
+                <h2>Visão Geral</h2>
+
+
+
+                <canvas id="graficoVendas"></canvas>
+
+
+
+            </div>
+
+
+
+            <!-- CONTENT -->
+
+
+
+            <div class="content">
+
+
+
+                <!-- TABELA -->
+
+
+
+                <div class="table-box">
+
+
+
+                    <div class="section-header">
+
+                        <h2>Últimos pedidos</h2>
+
+                    </div>
+
+
+
+                    <table>
+
+
+
+                        <thead>
+
+                            <tr>
+
+                                <th>ID</th>
+
+                                <th>Cliente</th>
+
+                                <th>Produto</th>
+
+                                <th>Status</th>
+
+                            </tr>
+
+                        </thead>
+
+
+
+                        <tbody>
+
+
+
+                            <tr>
+
+                                <td>#3021</td>
+
+                                <td>Maria Oliveira</td>
+
+                                <td>Moletom Comfort</td>
+
+                                <td>
+
+                                    <span class="status active-status">
+
+                                        Em preparo
+
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <tr>
+
+                                <td>#3018</td>
+
+                                <td>Lucas Andrade</td>
+
+                                <td>Camiseta Minimal</td>
+
+                                <td>
+
+                                    <span class="status pending-status">
+
+                                        Pendente
+
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <tr>
+
+                                <td>#3012</td>
+
+                                <td>Ana Souza</td>
+
+                                <td>Calça Wide Leg</td>
+
+                                <td>
+
+                                    <span class="status finished-status">
+
+                                        Entregue
+
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <tr>
+
+                                <td>#3009</td>
+
+                                <td>Fernanda Lima</td>
+
+                                <td>Jaqueta Cozy</td>
+
+                                <td>
+
+                                    <span class="status active-status">
+
+                                        Em preparo
+
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+
+
+                        </tbody>
+
+
+
+                    </table>
+
+
+
+                </div>
+
+
+
+                <!-- RESUMO -->
+
+
+
+                <div class="activity">
+
+
+
+                    <h2>Resumo do dia</h2>
+
+
+
+                    <div class="activity-item">
+
+                        <h4>12 novos pedidos</h4>
+
+                        <p>Novas compras foram realizadas nesta manhã.</p>
+
+                    </div>
+
+
+
+                    <div class="activity-item">
+
+                        <h4>5 produtos atualizados</h4>
+
+                        <p>Alterações de estoque e variações foram feitas.</p>
+
+                    </div>
+
+
+
+                    <div class="activity-item">
+
+                        <h4>3 usuários cadastrados</h4>
+
+                        <p>Novos clientes criaram contas na plataforma.</p>
+
+                    </div>
+
+
+
+                    <div class="activity-item">
+
+                        <h4>8 pedidos enviados</h4>
+
+                        <p>Pedidos despachados e atualizados no sistema.</p>
+
+                    </div>
+
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+        </main>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+<script>
+const canvas = document.getElementById("graficoVendas");
+
+const ctx = canvas.getContext("2d");
+
+new Chart(ctx, {
+    type: "bar",
+    data: {
+        labels: [
+            "Produtos",
+            "Pedidos",
+            "Clientes",
+            "Variações"
+        ],
+        datasets: [{
+            label: "Quantidade",
+            data: [
+                Number("{{ produtos }}"),
+                Number("{{ pedidos }}"),
+                Number("{{ cliente }}"),
+                Number("{{ variacoes }}")
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false
+    }
+});
+</script>
+
+
+
+</body>
+
+
+
+</html>

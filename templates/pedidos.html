@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Novo Pedido</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* =========================================================
+RESET
+========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f3f0ed;
+        }
+
+        /* =========================================================
+LAYOUT
+========================================================= */
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* =========================================================
+SIDEBAR
+========================================================= */
+
+        .sidebar {
+            width: 320px;
+            background: linear-gradient(to bottom, #2a0904, #4b1305);
+            padding: 35px 22px;
+        }
+
+        .logo h1 {
+            color: #fff;
+            font-size: 48px;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: #ff9800;
+            letter-spacing: 4px;
+            font-size: 18px;
+        }
+
+        .menu {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .menu-item {
+            text-decoration: none;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 22px;
+            border-radius: 22px;
+            font-size: 26px;
+            transition: 0.3s;
+        }
+
+        .menu-item:hover {
+            background: #ff5a00;
+        }
+
+        .menu-item.active {
+            background: linear-gradient(to right, #ff8c00, #ff2d00);
+        }
+
+        /* =========================================================
+CONTENT
+========================================================= */
+
+        .content {
+            flex: 1;
+            padding: 50px;
+        }
+
+        .topo h1 {
+            font-size: 64px;
+            color: #111;
+        }
+
+        .topo p {
+            margin-top: 10px;
+            color: #777;
+            font-size: 24px;
+        }
+
+        /* =========================================================
+CARD
+========================================================= */
+
+        .card {
+            margin-top: 35px;
+            background: #fff;
+            border-radius: 35px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            font-size: 34px;
+            color: #222;
+            margin-bottom: 30px;
+        }
+
+        /* =========================================================
+FORM
+========================================================= */
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .input-group input,
+        .input-group select {
+            background: #f4f4f4;
+            border: none;
+            border-radius: 18px;
+            padding: 18px;
+            font-size: 18px;
+            outline: none;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        /* =========================================================
+PRODUTOS
+========================================================= */
+
+        .produto-box {
+            border-top: 1px solid #eee;
+            padding-top: 35px;
+        }
+
+        .produto-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr auto;
+            gap: 18px;
+            align-items: end;
+            margin-bottom: 20px;
+        }
+
+        .btn-delete {
+            background: #ff3d00;
+            color: #fff;
+            border: none;
+            width: 55px;
+            height: 55px;
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .add-produto {
+            margin-top: 25px;
+            border: 2px dashed #ff8c00;
+            background: transparent;
+            color: #ff7a00;
+            padding: 20px;
+            border-radius: 18px;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .add-produto:hover {
+            background: #fff3eb;
+        }
+
+        /* =========================================================
+TOTAL
+========================================================= */
+
+        .total-box {
+            margin-top: 35px;
+            background: #fff7ef;
+            border-radius: 24px;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-box h2 {
+            color: #222;
+            font-size: 30px;
+        }
+
+        .total-box span {
+            color: #ff6b00;
+            font-size: 54px;
+            font-weight: 700;
+        }
+
+        /* =========================================================
+BUTTONS
+========================================================= */
+
+        .actions {
+            margin-top: 35px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            border: none;
+            padding: 20px 35px;
+            border-radius: 18px;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-voltar {
+            background: #fff;
+            border: 2px solid #ddd;
+            color: #333;
+        }
+
+        .btn-salvar {
+            background: linear-gradient(to right, #ff9800, #ff3d00);
+            color: #fff;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        /* =========================================================
+RESPONSIVO
+========================================================= */
+
+        @media(max-width:1200px) {
+
+            .sidebar {
+                display: none;
+            }
+
+            .content {
+                padding: 30px;
+            }
+
+            .row {
+                grid-template-columns: 1fr;
+            }
+
+            .produto-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+        }
+
+        /* =========================================================
+VARIAÇÕES
+========================================================= */
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .container .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #3f1f12, #1e0d07);
+            padding: 30px 20px;
+            color: white;
+        }
+
+        .container .logo {
+            margin-bottom: 40px;
+        }
+
+        .container .logo h1 {
+            color: white;
+            font-size: 32px;
+        }
+
+        .container .logo span {
+            color: #fca204;
+            font-size: 14px;
+            letter-spacing: 3px;
+        }
+
+        .container .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .container .menu-link {
+            display: block;
+            text-decoration: none;
+            color: white;
+            padding: 18px;
+            border-radius: 18px;
+            background: #ffffff10;
+            transition: .3s;
+        }
+
+        .container .menu-link:hover,
+        .container .menu-link.active {
+            background: linear-gradient(90deg,
+                    #fca204,
+                    #ea5104,
+                    #ba0b04);
+
+            transform: translateX(5px);
+        }
+
+        .container .logout-btn {
+            display: block;
+            text-decoration: none;
+            text-align: center;
+            margin-top: 20px;
+            padding: 18px;
+            border-radius: 18px;
+            color: white;
+            background: #ffffff10;
+            transition: .3s;
+        }
+
+        .container .logout-btn:hover {
+            background: #ba0b04;
+        }
+
+        .container .content {
+            flex: 1;
+            padding: 40px;
+        }
+
+        .container .topo h1 {
+            font-size: 48px;
+            color: #222;
+        }
+
+        .container .topo p {
+            color: #777;
+            margin-top: 5px;
+            font-size: 18px;
+        }
+
+        .container .card-form {
+            background: white;
+            margin-top: 30px;
+            padding: 35px;
+            border-radius: 25px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .05);
+        }
+
+        .container .input-group label {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .container .input-group input,
+        .container .input-group select {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 14px;
+            background: #f4f4f4;
+            font-size: 15px;
+        }
+
+        .container .dupla {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .container .btn-cadastrar {
+            background: linear-gradient(90deg,
+                    #fca204,
+                    #ea5104);
+
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .container .btn-cadastrar:hover {
+            opacity: .9;
+        }
+
+        @media(max-width:900px) {
+
+            .container {
+                flex-direction: column;
+            }
+
+            .container .sidebar {
+                width: 100%;
+            }
+
+            .container .dupla {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="logo">
+            <h1>Fogaréu</h1>
+            <span>CLOTHES</span>
+        </div>
+        <div class="menu">
+            <a href="{{ url_for('dashboard') }}" class="menu-link active">📊 Dashboard</a>
+            <a href="{{ url_for('produtos') }}" class="menu-link">👕 Produtos</a>
+            <a href="{{ url_for('variacoes') }}" class="menu-link">🎨 Variações</a>
+            <a href="{{ url_for('pedidos') }}" class="menu-link">🛒 Pedidos</a>
+            <a href="{{ url_for('cliente') }}" class="menu-link">👤 Clientes</a>
+            <a href="{{ url_for('logout') }}" class="logout-btn">🚪 Sair</a>
+        </div>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+        <div class="topo">
+            <h1>Novo Pedido</h1>
+            <p>Preencha os dados abaixo para criar um novo pedido.</p>
+        </div>
+
+        <section class="card">
+
+            <form id="pedidoForm" method="POST" action="{{ url_for('pedidos') }}"></form>
+
+                <!-- CLIENTE -->
+                <div>
+                    <h2 class="section-title">Dados do Cliente</h2>
+                    <div class="input-group">
+                        <label>Cliente</label>
+                        <select name="id_cliente" required>
+                            <option value="">Selecione o cliente</option>
+                            {% for cliente in clientes %}
+                            <option value="{{ cliente[0] }}">{{ cliente[1] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <!-- PEDIDO -->
+                <div>
+                    <h2 class="section-title">Dados do Pedido</h2>
+                    <div class="row">
+                        <div class="input-group">
+                            <label>Data da Venda</label>
+                            <input type="date" name="data" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Status</label>
+                            <select name="status" required>
+                                <option>Pendente</option>
+                                <option>Em preparo</option>
+                                <option>Enviado</option>
+                                <option>Entregue</option>
+                                <option>Cancelado</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+   <!-- PRODUTOS -->
+<div class="produto-box">
+
+    <h2 class="section-title">Produtos do Pedido</h2>
+
+    <div id="listaProdutos">
+
+        <div class="produto-grid">
+
+            <div class="input-group">
+                <label>Produto</label>
+
+                <select
+                    name="id_produto[]"
+                    class="produto-select"
+                    required>
+
+                    <option value="">
+                        Selecione o produto
+                    </option>
+
+                    {% for produto in produtos %}
+                    <option
+                        value="{{ produto[0] }}"
+                        data-preco="{{ produto[2] }}">
+                        {{ produto[1] }}
+                    </option>
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Quantidade</label>
+
+                <input
+                    type="number"
+                    name="quantidade[]"
+                    class="quantidade"
+                    min="1"
+                    value="1">
+            </div>
+
+            <div class="input-group">
+                <label>Preço Unitário</label>
+
+                <input
+                    type="number"
+                    name="preco[]"
+                    class="preco"
+                    step="0.01"
+                    placeholder="0.00">
+            </div>
+
+            <div class="input-group">
+                <label>Subtotal</label>
+
+                <input
+                    type="number"
+                    name="subtotal[]"
+                    class="subtotal"
+                    step="0.01"
+                    placeholder="0.00"
+                    readonly>
+            </div>
+
+            <button
+                type="button"
+                class="btn-delete">
+                🗑
+            </button>
+
+        </div>
+
+    </div>
+
+    <button
+        type="button"
+        id="addProduto"
+        class="add-produto">
+
+        + Adicionar Produto
+
+    </button>
+
+</div>
+
+<!-- TOTAL -->
+<div class="total-box">
+    <h2>Total do Pedido (R$):</h2>
+    <span id="totalPedido">0,00</span>
+</div>
+
+                <!-- ACTIONS -->
+                <div class="actions">
+                    <button type="button" class="btn btn-voltar" onclick="window.history.back()">← Voltar</button>
+                    <button type="submit" class="btn btn-salvar">💾 Salvar Pedido</button>
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+    </div>
+
+<script>
+
+function atualizarSubtotal() {
+
+    const produtos = document.querySelectorAll('.produto-grid');
+
+    let total = 0;
+
+    produtos.forEach(prod => {
+
+        const qtd =
+            parseFloat(prod.querySelector('.quantidade').value) || 0;
+
+        const preco =
+            parseFloat(prod.querySelector('.preco').value) || 0;
+
+        const subtotal = qtd * preco;
+
+        prod.querySelector('.subtotal').value =
+            subtotal.toFixed(2);
+
+        total += subtotal;
+
+    });
+
+    document.getElementById('totalPedido').innerText =
+        total.toLocaleString('pt-BR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+}
+
+
+/* =========================
+EVENTOS AUTOMÁTICOS
+========================= */
+
+document.addEventListener('input', function(e){
+
+    if(
+        e.target.classList.contains('quantidade') ||
+        e.target.classList.contains('preco')
+    ){
+        atualizarSubtotal();
+    }
+
+});
+
+document.addEventListener('change', function(e){
+
+    if(e.target.classList.contains('produto-select')){
+
+        const option =
+            e.target.options[e.target.selectedIndex];
+
+        const preco =
+            option.dataset.preco || 0;
+
+        const linha =
+            e.target.closest('.produto-grid');
+
+        linha.querySelector('.preco').value = preco;
+
+        atualizarSubtotal();
+    }
+
+});
+
+
+/* =========================
+ADICIONAR PRODUTO (NOVO)
+========================= */
+
+document.getElementById('addProduto').addEventListener('click', function() {
+
+    const lista = document.getElementById('listaProdutos');
+
+    const primeiraLinha = document.querySelector('.produto-grid');
+
+    const novaLinha = primeiraLinha.cloneNode(true);
+
+    // reset dos valores
+    novaLinha.querySelector('.quantidade').value = 1;
+    novaLinha.querySelector('.preco').value = '';
+    novaLinha.querySelector('.subtotal').value = '';
+    novaLinha.querySelector('.produto-select').selectedIndex = 0;
+
+    lista.appendChild(novaLinha);
+
+    atualizarSubtotal();
+
+});
+
+
+/* =========================
+REMOVER PRODUTO
+========================= */
+
+document.addEventListener('click', function(e){
+
+    if(e.target.classList.contains('btn-delete')){
+
+        const linhas =
+            document.querySelectorAll('.produto-grid');
+
+        if(linhas.length > 1){
+
+            e.target.closest('.produto-grid').remove();
+
+            atualizarSubtotal();
+        }
+    }
+
+});
+
+
+/* =========================
+INICIALIZA
+========================= */
+
+document.addEventListener('DOMContentLoaded', atualizarSubtotal);
+
+</script>
+
+</body>
+</html>

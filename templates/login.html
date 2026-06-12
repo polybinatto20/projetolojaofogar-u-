@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Fogaréu Clothes - Login</title>
+
+    <!-- CSS -->
+    <link
+        rel="stylesheet"
+        href="/static/style.css"
+    >
+
+    <!-- FONTES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@500;700&family=Great+Vibes&display=swap"
+        rel="stylesheet"
+    >
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- LADO ESQUERDO -->
+
+        <div class="left-side">
+
+            <div class="decor">
+
+                <div class="quote">
+                    your style,<br>
+                    your story.
+                </div>
+
+                <div class="candle">
+
+                    <div class="flame"></div>
+
+                    <div class="label">
+
+                        FOGARÉU<br>
+                        CLOTHES
+
+                        <span>
+                            wear your warmth
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- LADO DIREITO -->
+
+        <div class="right-side">
+
+            <div class="login-card">
+
+                <!-- LOGO -->
+
+                <div class="brand">
+
+                    <h1>Fogaréu Clothes</h1>
+
+                    <div class="comfort">
+                        comfort
+                    </div>
+
+                    <div class="slogan">
+                        WEAR YOUR MOMENT
+                    </div>
+
+                </div>
+
+                <!-- TEXTO -->
+
+                <div class="welcome">
+
+                    <h2>
+                        Bem-vindo de volta!
+                    </h2>
+
+                    <p>
+                        Faça login para acessar sua conta
+                    </p>
+
+                </div>
+
+                <!-- FORMULÁRIO -->
+
+                <form
+                    id="loginForm"
+                    method="POST"
+                    action="/login"
+                >
+
+                    <!-- EMAIL -->
+
+                    <div class="input-group">
+
+                        <label>
+                            E-mail
+                        </label>
+
+                        <div class="input-box">
+
+                            <span class="icon">
+                                ✉
+                            </span>
+
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="seu@email.com"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <!-- SENHA -->
+
+                    <div class="input-group">
+
+                        <label>
+                            Senha
+                        </label>
+
+                        <div class="input-box">
+
+                            <span class="icon">
+                                🔒
+                            </span>
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="senha"
+                                placeholder="••••••••"
+                                required
+                            >
+
+                            <span
+                                class="icon"
+                                id="togglePassword"
+                                style="cursor:pointer;"
+                            >
+                                👁
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <!-- ESQUECI SENHA -->
+
+                    <div class="forgot">
+
+                        <a href="#">
+                            Esqueceu sua senha?
+                        </a>
+
+                    </div>
+
+                    <!-- BOTÃO LOGIN -->
+
+                    <button
+                        type="submit"
+                        class="login-btn"
+                    >
+                        Entrar
+                    </button>
+
+                    <!-- DIVISOR -->
+
+                    <div class="divider">
+                        ou
+                    </div>
+
+                    <!-- CADASTRO -->
+
+                    <div class="register">
+
+                        Ainda não tem uma conta?
+
+                        <a href="/admin/cadastro">
+                            Cadastre-se
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        // MOSTRAR / ESCONDER SENHA
+
+        const togglePassword =
+        document.getElementById(
+            'togglePassword'
+        );
+
+        const password =
+        document.getElementById(
+            'password'
+        );
+
+        togglePassword.addEventListener(
+            'click',
+            () => {
+
+                const type =
+
+                password.getAttribute(
+                    'type'
+                ) === 'password'
+
+                ? 'text'
+                : 'password';
+
+                password.setAttribute(
+                    'type',
+                    type
+                );
+
+            }
+        );
+
+    </script>
+
+</body>
+</html>

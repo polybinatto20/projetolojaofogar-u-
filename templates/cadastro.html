@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Fogaréu Clothes - Cadastro</title>
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@500;700&family=Great+Vibes&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- CSS -->
+    <link
+        rel="stylesheet"
+        href="/static/style.css"
+    >
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- LADO ESQUERDO -->
+        <div class="left-side">
+
+            <div class="decor">
+
+                <div class="quote">
+                    create your style,<br>
+                    wear your essence.
+                </div>
+
+                <div class="candle">
+
+                    <div class="flame"></div>
+
+                    <div class="label">
+
+                        FOGARÉU<br>
+                        CLOTHES
+
+                        <span>wear your warmth</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- LADO DIREITO -->
+        <div class="right-side">
+
+            <div class="login-card">
+
+                <!-- LOGO -->
+                <div class="brand">
+
+                    <h1>Fogaréu Clothes</h1>
+
+                    <div class="comfort">
+                        comfort
+                    </div>
+
+                    <div class="slogan">
+                        CREATE YOUR ACCOUNT
+                    </div>
+
+                </div>
+
+                <!-- TEXTO -->
+                <div class="welcome">
+
+                    <h2>Crie sua conta</h2>
+
+                    <p>
+                        Cadastre um novo administrador no sistema
+                    </p>
+
+                </div>
+
+                <!-- FORM -->
+                <form
+                    action="/cadastro"
+                    method="POST"
+                >
+
+                    <!-- NOME -->
+                    <div class="input-group">
+
+                        <label>Nome</label>
+
+                        <div class="input-box">
+
+                            <span class="icon">👤</span>
+
+                            <input
+                                type="text"
+                                name="nome"
+                                placeholder="Digite seu nome"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <!-- EMAIL -->
+                    <div class="input-group">
+
+                        <label>E-mail</label>
+
+                        <div class="input-box">
+
+                            <span class="icon">✉</span>
+
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="seu@email.com"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <!-- SENHA -->
+                    <div class="input-group">
+
+                        <label>Senha</label>
+
+                        <div class="input-box">
+
+                            <span class="icon">🔒</span>
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="senha"
+                                placeholder="••••••••"
+                                required
+                            >
+
+                            <span
+                                class="icon"
+                                id="togglePassword"
+                                style="cursor:pointer;"
+                            >
+                                👁
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <!-- CONFIRMAR SENHA -->
+                    <div class="input-group">
+
+                        <label>Confirmar senha</label>
+
+                        <div class="input-box">
+
+                            <span class="icon">🔐</span>
+
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                placeholder="••••••••"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <!-- BOTÃO -->
+                    <button
+                        type="submit"
+                        class="login-btn"
+                    >
+                        Cadastrar
+                    </button>
+
+                    <!-- DIVISOR -->
+                    <div class="divider">
+                        ou
+                    </div>
+
+                    <!-- LOGIN -->
+                    <div class="register">
+
+                        Já possui uma conta?
+
+                        <a href="/login">
+                            Fazer login
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        fetch("http://127.0.0.1:5000/produtos/cadastrar", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        nome: "Notebook",
+        preco: 2500
+    })
+})
+
+        // MOSTRAR / ESCONDER SENHA
+
+        const togglePassword =
+        document.getElementById("togglePassword");
+
+        const password =
+        document.getElementById("password");
+
+        togglePassword.addEventListener("click", () => {
+
+            const type =
+            password.getAttribute("type") === "password"
+            ? "text"
+            : "password";
+
+            password.setAttribute("type", type);
+
+        });
+
+    </script>
+
+</body>
+</html>

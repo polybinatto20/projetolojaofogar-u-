@@ -1,0 +1,629 @@
+```html id="pagina-pedidos"
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gerenciamento de Pedidos</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins', sans-serif;
+    background:#f3f0ed;
+}
+
+/* =========================================================
+LAYOUT
+========================================================= */
+
+.container{
+    display:flex;
+    min-height:100vh;
+}
+
+/* =========================================================
+SIDEBAR
+========================================================= */
+
+.sidebar{
+    width:320px;
+    background:linear-gradient(to bottom,#2a0904,#4b1305);
+    padding:35px 22px;
+}
+
+.logo h1{
+    color:#fff;
+    font-size:48px;
+    font-weight:700;
+}
+
+.logo span{
+    color:#ff9800;
+    letter-spacing:4px;
+    font-size:18px;
+}
+
+.menu{
+    margin-top:50px;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.menu-item{
+    text-decoration:none;
+    color:#fff;
+    background:rgba(255,255,255,0.08);
+    padding:22px;
+    border-radius:22px;
+    font-size:28px;
+    transition:0.3s;
+}
+
+.menu-item:hover{
+    background:#ff5a00;
+}
+
+.menu-item.active{
+    background:linear-gradient(to right,#ff7a00,#ff2d00);
+}
+
+/* =========================================================
+CONTENT
+========================================================= */
+
+.content{
+    flex:1;
+    padding:50px;
+}
+
+.topo{
+    margin-bottom:35px;
+}
+
+.topo h1{
+    font-size:60px;
+    color:#222;
+}
+
+.topo p{
+    margin-top:10px;
+    color:#777;
+    font-size:22px;
+}
+
+/* =========================================================
+CARDS
+========================================================= */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+    margin-bottom:40px;
+}
+
+.card{
+    background:#fff;
+    padding:30px;
+    border-radius:28px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.05);
+    border-top:6px solid #ff5a00;
+}
+
+.card h3{
+    color:#666;
+    font-size:22px;
+    margin-bottom:15px;
+}
+
+.card span{
+    font-size:52px;
+    font-weight:700;
+    color:#222;
+}
+
+/* =========================================================
+PEDIDOS
+========================================================= */
+
+.pedidos-box{
+    background:#fff;
+    padding:40px;
+    border-radius:30px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.05);
+}
+
+.titulo-pedidos{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.titulo-pedidos h2{
+    font-size:48px;
+    color:#222;
+}
+
+.btn-novo{
+    background:linear-gradient(to right,#ff8c00,#ff3d00);
+    color:#fff;
+    border:none;
+    padding:18px 30px;
+    border-radius:18px;
+    font-size:18px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn-novo:hover{
+    opacity:0.9;
+    transform:translateY(-2px);
+}
+
+/* =========================================================
+TABELA
+========================================================= */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    text-align:left;
+    color:#777;
+    padding:18px 10px;
+    font-size:20px;
+}
+
+td{
+    padding:22px 10px;
+    border-top:1px solid #eee;
+    font-size:18px;
+    color:#333;
+}
+
+/* =========================================================
+STATUS
+========================================================= */
+
+.status{
+    padding:10px 18px;
+    border-radius:20px;
+    font-weight:600;
+    font-size:15px;
+    display:inline-block;
+}
+
+.preparo{
+    background:#ffe4cc;
+    color:#ff6b00;
+}
+
+.pendente{
+    background:#fff2c7;
+    color:#c68b00;
+}
+
+.entregue{
+    background:#d9f5df;
+    color:#0a8f3d;
+}
+
+.cancelado{
+    background:#ffd9d9;
+    color:#d60000;
+}
+
+/* =========================================================
+AÇÕES
+========================================================= */
+
+.acoes{
+    display:flex;
+    gap:10px;
+}
+
+.btn{
+    border:none;
+    padding:10px 14px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.editar{
+    background:#ffe0b3;
+    color:#ff6b00;
+}
+
+.remover{
+    background:#ffd6d6;
+    color:#d60000;
+}
+
+.btn:hover{
+    opacity:0.85;
+}
+
+/* =========================================================
+RESPONSIVO
+========================================================= */
+
+@media(max-width:1100px){
+
+    .sidebar{
+        display:none;
+    }
+
+    .content{
+        padding:30px;
+    }
+
+    .titulo-pedidos{
+        flex-direction:column;
+        gap:20px;
+        align-items:flex-start;
+    }
+
+    .titulo-pedidos h2{
+        font-size:36px;
+    }
+
+    table{
+        display:block;
+        overflow-x:auto;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h1>Fogaréu</h1>
+            <span>CLOTHES</span>
+        </div>
+
+        <nav class="menu">
+
+            <a href="#" class="menu-item">
+                📊 Dashboard
+            </a>
+
+            <a href="#" class="menu-item">
+                👥 Clientes
+            </a>
+
+            <a href="#" class="menu-item">
+                👕 Produtos
+            </a>
+
+            <a href="#" class="menu-item">
+                🎨 Variações
+            </a>
+
+            <a href="#" class="menu-item active">
+                🛒 Pedidos
+            </a>
+
+            <a href="#" class="menu-item">
+                ⚙️ Configurações
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- CONTENT -->
+
+    <main class="content">
+
+        <div class="topo">
+
+            <h1>Gerenciamento de Pedidos</h1>
+
+            <p>Gerencie os pedidos da loja em tempo real.</p>
+
+        </div>
+
+        <!-- CARDS -->
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Pedidos Totais</h3>
+                <span id="totalPedidos">4</span>
+            </div>
+
+            <div class="card">
+                <h3>Pedidos Pendentes</h3>
+                <span id="pendentes">1</span>
+            </div>
+
+            <div class="card">
+                <h3>Pedidos Entregues</h3>
+                <span id="entregues">1</span>
+            </div>
+
+        </div>
+
+        <!-- TABELA -->
+
+        <section class="pedidos-box">
+
+            <div class="titulo-pedidos">
+
+                <h2>Lista de Pedidos</h2>
+
+                <button class="btn-novo" onclick="novoPedido()">
+                    + Novo Pedido
+                </button>
+
+            </div>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Produto</th>
+                        <th>Status</th>
+                        <th>Total</th>
+                        <th>Ações</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="tabelaPedidos">
+
+                    <tr>
+
+                        <td>#3001</td>
+                        <td>Maria Oliveira</td>
+                        <td>Moletom Comfort</td>
+
+                        <td>
+                            <span class="status preparo">
+                                Em preparo
+                            </span>
+                        </td>
+
+                        <td>R$ 189,90</td>
+
+                        <td class="acoes">
+
+                            <button class="btn editar">
+                                Editar
+                            </button>
+
+                            <button class="btn remover" onclick="removerPedido(this)">
+                                Remover
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>#3002</td>
+                        <td>Lucas Andrade</td>
+                        <td>Camiseta Minimal</td>
+
+                        <td>
+                            <span class="status pendente">
+                                Pendente
+                            </span>
+                        </td>
+
+                        <td>R$ 79,90</td>
+
+                        <td class="acoes">
+
+                            <button class="btn editar">
+                                Editar
+                            </button>
+
+                            <button class="btn remover" onclick="removerPedido(this)">
+                                Remover
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>#3003</td>
+                        <td>Ana Souza</td>
+                        <td>Calça Wide Leg</td>
+
+                        <td>
+                            <span class="status entregue">
+                                Entregue
+                            </span>
+                        </td>
+
+                        <td>R$ 229,90</td>
+
+                        <td class="acoes">
+
+                            <button class="btn editar">
+                                Editar
+                            </button>
+
+                            <button class="btn remover" onclick="removerPedido(this)">
+                                Remover
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>#3004</td>
+                        <td>Fernanda Lima</td>
+                        <td>Jaqueta Cozy</td>
+
+                        <td>
+                            <span class="status cancelado">
+                                Cancelado
+                            </span>
+                        </td>
+
+                        <td>R$ 299,90</td>
+
+                        <td class="acoes">
+
+                            <button class="btn editar">
+                                Editar
+                            </button>
+
+                            <button class="btn remover" onclick="removerPedido(this)">
+                                Remover
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script>
+
+/* =========================================================
+NOVO PEDIDO
+========================================================= */
+
+function novoPedido(){
+
+    const tabela = document.getElementById("tabelaPedido");
+
+    const linha = document.createElement("tr");
+
+    linha.innerHTML = `
+
+        <td>#3005</td>
+
+        <td>Novo Cliente</td>
+
+        <td>Novo Produto</td>
+
+        <td>
+            <span class="status pendente">
+                Pendente
+            </span>
+        </td>
+
+        <td>R$ 0,00</td>
+
+        <td class="acoes">
+
+            <button class="btn editar">
+                Editar
+            </button>
+
+            <button class="btn remover" onclick="removerPedido(this)">
+                Remover
+            </button>
+
+        </td>
+
+    `;
+
+    tabela.appendChild(linha);
+
+    atualizarCards();
+
+}
+
+/* =========================================================
+REMOVER PEDIDO
+========================================================= */
+
+function removerPedido(botao){
+
+    botao.closest("tr").remove();
+
+    atualizarCards();
+
+}
+
+/* =========================================================
+ATUALIZA CARDS
+========================================================= */
+
+function atualizarCards(){
+
+    const linhas = document.querySelectorAll("#tabelaPedido tr");
+
+    document.getElementById("totalPedido").innerText = linhas.length;
+
+    let pendentes = 0;
+    let entregues = 0;
+
+    linhas.forEach(linha => {
+
+        const status = linha.innerText;
+
+        if(status.includes("Pendente")){
+            pendentes++;
+        }
+
+        if(status.includes("Entregue")){
+            entregues++;
+        }
+
+    });
+
+    document.getElementById("pendentes").innerText = pendentes;
+
+    document.getElementById("entregues").innerText = entregues;
+
+}
+
+</script>
+
+</body>
+</html>
+```

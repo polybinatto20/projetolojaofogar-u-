@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="D:/polyana/Projeto-site fogareu/FogareuClothes.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="0"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="366"/><column_width id="3" width="2498"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="0" parent="0"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="Usuario" custom_title="0" dock_id="9" table="4,7:mainUsuario"/><dock_state state="000000ff00000000fd00000001000000020000043c000002befc0100000009fb000000160064006f0063006b00420072006f00770073006500310100000000ffffffff0000000000000000fb000000160064006f0063006b00420072006f00770073006500320100000000ffffffff0000000000000000fb000000160064006f0063006b00420072006f00770073006500330100000000ffffffff0000000000000000fb000000160064006f0063006b00420072006f00770073006500340100000000ffffffff0000000000000000fb000000160064006f0063006b00420072006f00770073006500350100000000ffffffff0000000000000000fb000000160064006f0063006b00420072006f00770073006500360100000000ffffffff0000000000000000fb000000160064006f0063006b00420072006f00770073006500370100000000ffffffff0000000000000000fb000000160064006f0063006b00420072006f00770073006500380100000000ffffffff0000000000000000fb000000160064006f0063006b00420072006f007700730065003901000000000000043c0000011e00ffffff0000025e0000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="Cliente" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="63"/><column index="2" value="39"/><column index="3" value="29"/><column index="4" value="39"/><column index="5" value="54"/><column index="6" value="59"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="Usuario" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="29"/><column index="2" value="121"/><column index="3" value="93"/><column index="4" value="262"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1*">-- =====================================================
+-- Criação do banco de dados SQLite
+-- Sistema de vendas / estoque
+-- =====================================================
+
+PRAGMA foreign_keys = ON;
+
+-- =====================================================
+-- TABELA: Cliente
+-- =====================================================
+CREATE TABLE Cliente (
+    id_cliente     INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome           TEXT NOT NULL,
+    cpf            TEXT UNIQUE NOT NULL,
+    email          TEXT UNIQUE,
+    telefone       TEXT,
+    endereco       TEXT
+);
+
+-- =====================================================
+-- TABELA: Produto
+-- =====================================================
+CREATE TABLE Produto (
+    id_produto     INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome           TEXT NOT NULL,
+    descricao      TEXT,
+    preco_base     REAL NOT NULL,
+    categoria      TEXT
+);
+
+-- =====================================================
+-- TABELA: Variacao
+-- Relação: Produto possui várias variações
+-- =====================================================
+CREATE TABLE Variacao (
+    id_variacao    INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_produto     INTEGER NOT NULL,
+    tamanho        TEXT,
+    cor            TEXT,
+    estoque_atual  INTEGER NOT NULL DEFAULT 0,
+
+    FOREIGN KEY (id_produto)
+        REFERENCES Produto(id_produto)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+-- =====================================================
+-- TABELA: Pedido
+-- Relação: Cliente realiza vários pedidos
+-- =====================================================
+CREATE TABLE Pedido (
+    id_pedido      INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_cliente     INTEGER NOT NULL,
+    data_venda     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    valor_total    REAL NOT NULL,
+    status         TEXT NOT NULL,
+
+    FOREIGN KEY (id_cliente)
+        REFERENCES Cliente(id_cliente)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+-- =====================================================
+-- TABELA ASSOCIATIVA: Pedido_Produto
+-- Relação N:N entre Pedido e Produto
+-- (&quot;Contém&quot; no diagrama)
+-- =====================================================
+CREATE TABLE Pedido_Produto (
+    id_pedido      INTEGER NOT NULL,
+    id_produto     INTEGER NOT NULL,
+    quantidade     INTEGER NOT NULL DEFAULT 1,
+    preco_unitario REAL NOT NULL,
+
+    PRIMARY KEY (id_pedido, id_produto),
+
+    FOREIGN KEY (id_pedido)
+        REFERENCES Pedido(id_pedido)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+
+    FOREIGN KEY (id_produto)
+        REFERENCES Produto(id_produto)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+-- =====================================================
+-- ÍNDICES (opcional, melhora desempenho)
+-- =====================================================
+
+CREATE INDEX idx_variacao_produto
+ON Variacao(id_produto);
+
+CREATE INDEX idx_pedido_cliente
+ON Pedido(id_cliente);
+
+CREATE INDEX idx_pedido_produto_produto
+ON Pedido_Produto(id_produto);</sql><current_tab id="0"/></tab_sql></sqlb_project>
